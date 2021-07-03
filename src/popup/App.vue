@@ -44,7 +44,7 @@
           </div>
 
           <h4>{{ r_corporate_insider.title }}</h4>
-          <p>{{r_corporate_insider.csp_title}}</p>
+          <p>{{ r_corporate_insider.csp_title }}</p>
           <div>
             <vue-slider
               v-model="r_corporate_insider.csp_num"
@@ -55,7 +55,7 @@
             ></vue-slider>
           </div>
 
-          <p>{{r_corporate_insider.dev_title}}</p>
+          <p>{{ r_corporate_insider.dev_title }}</p>
           <div>
             <vue-slider
               v-model="r_corporate_insider.dev_num"
@@ -100,7 +100,7 @@
             :marks="i_commit.options"
           ></vue-slider>
 
-          <h4>{{i_strategy.title}}</h4>
+          <h4>{{ i_strategy.title }}</h4>
           <vue-slider
             v-model="i_strategy.num"
             :adsorb="true"
@@ -138,7 +138,6 @@ export default {
   },
   data: function () {
     return {
-      // 既存施設アカウント数
       r_facilities_count: {
         title: "既存施設アカウント数",
         num: 1,
@@ -227,7 +226,21 @@ export default {
       ];
     },
     formatedAsMarkdown() {
-      return "```\n" + this.getScore() + "\n```";
+      let text = "";
+
+      text += "## メリット量\n";
+      text += "\n";
+      text += "| name | value |\n";
+      text += "| ---- | ---- |\n";
+      text += "| " + this.r_facilities_count.title + " | " + this.r_facilities_count.num + " |\n";
+      text += "| " + this.r_frequency.title + " | " + this.r_facilities_count.num + " |\n";
+      text += "| " + this.r_corporate_insider.title + " | " + this.getCorporateInsiderNum()+ " |\n";
+      text += "| " + this.i_affected_users.title + " | " + this.i_affected_users.num + " |\n";
+      text += "| " + this.i_after_actions.title + " | " + this.i_after_actions.num + " |\n";
+      text += "| " + this.i_commit.title + " | " + this.i_commit.num + " |\n";
+      text += "| **total** | **" + this.getScore()+ "** |\n";
+
+      return text;
     },
     writeToClipboard(text) {
       if (navigator.clipboard) {
