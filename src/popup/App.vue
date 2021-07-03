@@ -2,12 +2,9 @@
   <div>
     <h1>Priority Score</h1>
 
-    <p>メリット量: {{ getScore }}</p>
+    <p>メリット量: {{ getScore() }}</p>
 
-    <div>
-    <span>{{ my_text }}</span>
-    <button @click="writeToClipboard(my_text)">COPY</button>
-    </div>
+    <button @click="writeToClipboard(formatedAsMarkdown())">COPY</button>
 
     <div id="tabs">
       <input type="radio" value="1" id="tab1" v-model="isActive" />
@@ -22,36 +19,35 @@
           <!-- メリット量=(施設アカウント数×頻度+社内関係者)×(関係者×その後の行動+社外コミット有無+事業戦略上の必要) -->
           <h3>~Reach~</h3>
 
-          <h4>既存施設アカウント数</h4>
+          <h4>{{ r_facilities_count.title }}</h4>
           <div>
             <vue-slider
-              v-model="r_facilities_count"
+              v-model="r_facilities_count.num"
               :adsorb="true"
               :min="1"
               :max="5"
               :interval="2"
-              :marks="r_facilities_count_options"
+              :marks="r_facilities_count.options"
             ></vue-slider>
           </div>
 
-          <h4>頻度</h4>
+          <h4>{{ r_frequency.title }}</h4>
           <div>
             <vue-slider
-              v-model="r_frequency"
+              v-model="r_frequency.num"
               :adsorb="true"
               :min="1"
               :max="5"
               :interval="1"
-              :marks="r_frequency_options"
+              :marks="r_frequency.options"
             ></vue-slider>
           </div>
 
-          <h4>社内関係者</h4>
-          <p>サポート</p>
-          影響小
+          <h4>{{ r_corporate_insider.title }}</h4>
+          <p>{{r_corporate_insider.csp_title}}</p>
           <div>
             <vue-slider
-              v-model="r_corporate_insider_csp"
+              v-model="r_corporate_insider.csp_num"
               :adsorb="true"
               :data="involved_ppl_object"
               :data-value="'id'"
@@ -59,11 +55,10 @@
             ></vue-slider>
           </div>
 
-          <p>DEV</p>
-          影響小
+          <p>{{r_corporate_insider.dev_title}}</p>
           <div>
             <vue-slider
-              v-model="r_corporate_insider_dev"
+              v-model="r_corporate_insider.dev_num"
               :adsorb="true"
               :data="involved_ppl_object"
               :data-value="'id'"
@@ -75,44 +70,44 @@
 
           <h3>~Impact~</h3>
 
-          <h4>ユーザー影響度</h4>
+          <h4>{{ i_affected_users.title }}</h4>
           <vue-slider
-            v-model="i_affected_users"
+            v-model="i_affected_users.num"
             :adsorb="true"
             :min="1"
             :max="5"
             :interval="2"
-            :marks="i_affected_users_options"
+            :marks="i_affected_users.options"
           ></vue-slider>
 
-          <h4>その後の行動</h4>
+          <h4>{{ i_after_actions.title }}</h4>
           <vue-slider
-            v-model="i_after_actions"
+            v-model="i_after_actions.num"
             :adsorb="true"
             :min="1"
             :max="5"
             :interval="2"
-            :marks="i_after_actions_options"
+            :marks="i_after_actions.options"
           ></vue-slider>
 
-          <h4>社外コミット</h4>
+          <h4>{{ i_commit.title }}</h4>
           <vue-slider
-            v-model="i_commit"
+            v-model="i_commit.num"
             :adsorb="true"
             :min="0"
             :max="25"
             :interval="25"
-            :marks="i_commit_options"
+            :marks="i_commit.options"
           ></vue-slider>
 
-          <h4>事業戦略的観点</h4>
+          <h4>{{i_strategy.title}}</h4>
           <vue-slider
-            v-model="i_strategy"
+            v-model="i_strategy.num"
             :adsorb="true"
             :min="0"
             :max="10"
             :interval="5"
-            :marks="i_strategy_options"
+            :marks="i_strategy.options"
           ></vue-slider>
         </div>
       </li>
@@ -144,84 +139,103 @@ export default {
   data: function () {
     return {
       // 既存施設アカウント数
-      r_facilities_count: 1,
-      r_facilities_count_options: {
-        1: "全施設の3割未満",
-        3: "全施設の3〜6割",
-        5: "全施設の6割以上",
+      r_facilities_count: {
+        title: "既存施設アカウント数",
+        num: 1,
+        options: {
+          1: "全施設の3割未満",
+          3: "全施設の3〜6割",
+          5: "全施設の6割以上",
+        },
       },
-      // 頻度
-      r_frequency: 1,
-      r_frequency_options: {
-        1: "1回きり",
-        2: "年に1回以上",
-        3: "月に1~3回",
-        4: "週1回以上",
-        5: "毎日",
+      r_frequency: {
+        title: "頻度",
+        num: 1,
+        options: {
+          1: "1回きり",
+          2: "年に1回以上",
+          3: "月に1~3回",
+          4: "週1回以上",
+          5: "毎日",
+        },
       },
-      // 社内関係者
-      r_corporate_insider_csp: 1,
-      r_corporate_insider_dev: 1,
+      r_corporate_insider: {
+        title: "社内関係者",
+        csp_num: 0,
+        csp_title: "サポート",
+        dev_num: 0,
+        dev_title: "DEV",
+      },
       involved_ppl_object: [
         { id: 0, name: "影響小" },
         { id: 1, name: "そこそこ" },
         { id: 2, name: "影響大" },
       ],
-      // ユーザー影響度
-      i_affected_users: 1,
-      i_affected_users_options: {
-        1: "そのユーザー1人で完結する",
-        3: "施設内の他の職員に波及する",
-        5: "保護者まで届く",
+      i_affected_users: {
+        title: "ユーザー影響度",
+        num: 1,
+        options: {
+          1: "そのユーザー1人で完結する",
+          3: "施設内の他の職員に波及する",
+          5: "保護者まで届く",
+        },
       },
-      // その後の行動
-      i_after_actions: 1,
-      i_after_actions_options: {
-        1: "無視 or 問い合わせ",
-        3: "運用回避 or 丹念に説明",
-        5: "運用回避できず謝罪 or 解約",
+      i_after_actions: {
+        title: "その後の行動",
+        num: 1,
+        options: {
+          1: "無視 or 問い合わせ",
+          3: "運用回避 or 丹念に説明",
+          5: "運用回避できず謝罪 or 解約",
+        },
       },
-      // 社外コミット
-      i_commit: 0,
-      i_commit_options: {
-        0: "コミットなし",
-        25: "コミットあり",
+      i_commit: {
+        title: "社外コミット",
+        num: 0,
+        options: {
+          0: "コミットなし",
+          25: "コミットあり",
+        },
       },
-      // 事業戦略的観点
-      i_strategy: 0,
-      i_strategy_options: {
-        0: "なし",
-        5: "小",
-        10: "大",
+      i_strategy: {
+        title: "事業戦略的観点",
+        num: 0,
+        options: {
+          0: "なし",
+          5: "小",
+          10: "大",
+        },
       },
       isActive: "1",
-      my_text: 'uhohoo?'
     };
   },
-  computed: {
+  methods: {
     getScore: function () {
       return (
         // Reach
-        (this.r_facilities_count * this.r_frequency +
+        (this.r_facilities_count.num * this.r_frequency.num +
           this.getCorporateInsiderNum()) *
         // Impact
-        (this.i_affected_users * this.i_after_actions +
-          this.i_commit +
-          this.i_strategy)
+        (this.i_affected_users.num * this.i_after_actions.num +
+          this.i_commit.num +
+          this.i_strategy.num)
       );
     },
-  },
-  methods: {
     getCorporateInsiderNum: function () {
-      return involved_ppl_options[this.r_corporate_insider_csp][
-        this.r_corporate_insider_dev
+      return involved_ppl_options[this.r_corporate_insider.csp_num][
+        this.r_corporate_insider.dev_num
       ];
     },
+    formatedAsMarkdown() {
+      return "```\n" + this.getScore() + "\n```";
+    },
     writeToClipboard(text) {
-      navigator.clipboard.writeText(text).catch((e) => {
-        console.error(e)
-      })
-    }
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).catch((e) => {
+          console.error(e);
+        });
+      }
+    },
   },
 };
 </script>
