@@ -25,94 +25,107 @@
         <div class="margin">
           <!-- メリット量=(施設アカウント数×頻度+社内関係者)×(関係者×その後の行動+社外コミット有無+事業戦略上の必要) -->
 
-          <h4>{{ r_facilities_count.title }}</h4>
-          <div>
+          <div class="block">
+            <h4>{{ r_facilities_count.title }}</h4>
+            <div>
+              <vue-slider
+                v-model="r_facilities_count.num"
+                :adsorb="true"
+                :min="1"
+                :max="5"
+                :interval="2"
+                :marks="r_facilities_count.options"
+              ></vue-slider>
+            </div>
+          </div>
+
+          <div class="block">
+            <h4>{{ r_frequency.title }}</h4>
+            <div>
+              <vue-slider
+                v-model="r_frequency.num"
+                :adsorb="true"
+                :min="1"
+                :max="5"
+                :interval="1"
+                :marks="r_frequency.options"
+              ></vue-slider>
+            </div>
+          </div>
+
+          <div class="block">
+            <h4>{{ r_corporate_insider.title }} : {{ r_corporate_insider.csp_title }}</h4>
+            <div>
+              <vue-slider
+                v-model="r_corporate_insider.csp_num"
+                :adsorb="true"
+                :data="involved_ppl_object"
+                :data-value="'id'"
+                :data-label="'name'"
+              ></vue-slider>
+            </div>
+          </div>
+
+          <div class="block">
+            <h4>{{ r_corporate_insider.title }} : {{ r_corporate_insider.dev_title }}</h4>
+            <div>
+              <vue-slider
+                v-model="r_corporate_insider.dev_num"
+                :adsorb="true"
+                :data="involved_ppl_object"
+                :data-value="'id'"
+                :data-label="'name'"
+              ></vue-slider>
+            </div>
+          </div>
+
+          <div class="block">
+            <h4>{{ i_affected_users.title }}</h4>
             <vue-slider
-              v-model="r_facilities_count.num"
+              v-model="i_affected_users.num"
               :adsorb="true"
               :min="1"
               :max="5"
               :interval="2"
-              :marks="r_facilities_count.options"
+              :marks="i_affected_users.options"
             ></vue-slider>
           </div>
 
-          <h4>{{ r_frequency.title }}</h4>
-          <div>
+          <div class="block">
+            <h4>{{ i_after_actions.title }}</h4>
             <vue-slider
-              v-model="r_frequency.num"
+              v-model="i_after_actions.num"
               :adsorb="true"
               :min="1"
               :max="5"
-              :interval="1"
-              :marks="r_frequency.options"
+              :interval="2"
+              :marks="i_after_actions.options"
             ></vue-slider>
           </div>
 
-          <h4>{{ r_corporate_insider.title }}</h4>
-          <p>{{ r_corporate_insider.csp_title }}</p>
-          <div>
+          <div class="block">
+            <h4>{{ i_commit.title }}</h4>
             <vue-slider
-              v-model="r_corporate_insider.csp_num"
+              v-model="i_commit.num"
               :adsorb="true"
-              :data="involved_ppl_object"
-              :data-value="'id'"
-              :data-label="'name'"
+              :min="0"
+              :max="25"
+              :interval="25"
+              :marks="i_commit.options"
             ></vue-slider>
           </div>
 
-          <p>{{ r_corporate_insider.dev_title }}</p>
-          <div>
+          <div class="block">
+            <h4>{{ i_strategy.title }}</h4>
             <vue-slider
-              v-model="r_corporate_insider.dev_num"
+              v-model="i_strategy.num"
               :adsorb="true"
-              :data="involved_ppl_object"
-              :data-value="'id'"
-              :data-label="'name'"
+              :min="0"
+              :max="10"
+              :interval="5"
+              :marks="i_strategy.options"
             ></vue-slider>
           </div>
-
-          <br />
-
-          <h4>{{ i_affected_users.title }}</h4>
-          <vue-slider
-            v-model="i_affected_users.num"
-            :adsorb="true"
-            :min="1"
-            :max="5"
-            :interval="2"
-            :marks="i_affected_users.options"
-          ></vue-slider>
-
-          <h4>{{ i_after_actions.title }}</h4>
-          <vue-slider
-            v-model="i_after_actions.num"
-            :adsorb="true"
-            :min="1"
-            :max="5"
-            :interval="2"
-            :marks="i_after_actions.options"
-          ></vue-slider>
-
-          <h4>{{ i_commit.title }}</h4>
-          <vue-slider
-            v-model="i_commit.num"
-            :adsorb="true"
-            :min="0"
-            :max="25"
-            :interval="25"
-            :marks="i_commit.options"
-          ></vue-slider>
-
-          <h4>{{ i_strategy.title }}</h4>
-          <vue-slider
-            v-model="i_strategy.num"
-            :adsorb="true"
-            :min="0"
-            :max="10"
-            :interval="5"
-            :marks="i_strategy.options"
-          ></vue-slider>
         </div>
       </li>
       <li v-else-if="isActive == '2'">
@@ -167,7 +180,7 @@ export default {
         csp_num: 0,
         csp_title: "サポート",
         dev_num: 0,
-        dev_title: "DEV",
+        dev_title: "開発",
       },
       involved_ppl_object: [
         { id: 0, name: "影響小" },
@@ -274,6 +287,15 @@ html {
   font-size: 15px;
 }
 
+h4 {
+  padding: 3px 6px;
+  width: 200px;
+  color: #fff;
+  background: #01a2c1;
+  -webkit-box-shadow: 5px 5px 0 #028fac;
+  box-shadow: 5px 5px 0 #028fac;
+}
+
 /* position */
 #bar {
   position: fixed;
@@ -319,5 +341,10 @@ html {
 #tabs label:hover {
   background: #01a2c1;
   color: #fff;
+}
+
+.block {
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 </style>
