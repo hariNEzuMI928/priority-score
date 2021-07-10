@@ -9,13 +9,18 @@
 - [ ] デザインをいい感じにする（priority-score/src/popup/App.vue）
 - [x] アイコンをいい感じのものに変更する（priority-score/dist/icons/）
 
-## setup
+## Setup
 
 ```
-git clone https://github.com/hariNEzuMI928/priority-score
-cd priority-score
-npm i
-npm run build
+$ git clone https://github.com/hariNEzuMI928/priority-score
+$ cd priority-score
+$ npm i
+$ npm run build
+```
+
+watch
+```
+$ npm run serve
 ```
 
 ## Browser settings

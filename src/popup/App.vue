@@ -12,12 +12,12 @@
       <input type="radio" value="2" id="tab2" v-model="isActive" />
       <label for="tab2">機能改善</label>
     </div>
+
     <ul id="contents">
       <li v-if="isActive == '1'">
-        <h2>バグ改修</h2>
+        <!-- バグ改修 -->
         <div>
           <!-- メリット量=(施設アカウント数×頻度+社内関係者)×(関係者×その後の行動+社外コミット有無+事業戦略上の必要) -->
-          <h3>~Reach~</h3>
 
           <h4>{{ r_facilities_count.title }}</h4>
           <div>
@@ -67,8 +67,6 @@
           </div>
 
           <br />
-
-          <h3>~Impact~</h3>
 
           <h4>{{ i_affected_users.title }}</h4>
           <vue-slider
