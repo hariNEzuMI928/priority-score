@@ -1,22 +1,28 @@
 <template>
   <div>
-    <h1>Priority Score</h1>
+    <div id="bar">
+      <h1>Priority Score</h1>
+      <p>
+        メリット量: {{ getScore() }}
+        &nbsp;&nbsp;&nbsp;
+        <button @click="writeToClipboard(formatedAsMarkdown())">
+          <img alt="Vue logo" src="../assets/copy.png" />
+        </button>
+      </p>
 
-    <p>メリット量: {{ getScore() }}</p>
-
-    <button @click="writeToClipboard(formatedAsMarkdown())">COPY</button>
-
-    <div id="tabs">
-      <input type="radio" value="1" id="tab1" v-model="isActive" />
-      <label for="tab1">バグ改修</label>
-      <input type="radio" value="2" id="tab2" v-model="isActive" />
-      <label for="tab2">機能改善</label>
+      <div id="tabs" class="full-width">
+        <input type="radio" value="1" id="tab1" v-model="isActive" />
+        <label for="tab1">バグ改修</label>
+        <input type="radio" value="2" id="tab2" v-model="isActive" />
+        <label for="tab2">機能改善</label>
+      </div>
     </div>
 
+    <div class="page"></div>
     <ul id="contents">
       <li v-if="isActive == '1'">
         <!-- バグ改修 -->
-        <div>
+        <div class="margin">
           <!-- メリット量=(施設アカウント数×頻度+社内関係者)×(関係者×その後の行動+社外コミット有無+事業戦略上の必要) -->
 
           <h4>{{ r_facilities_count.title }}</h4>
@@ -110,7 +116,6 @@
         </div>
       </li>
       <li v-else-if="isActive == '2'">
-        <h2>機能改善</h2>
         <p>
           <!-- メリット量=(施設アカウント数×頻度+社内関係者)×(関係者×感情の変化+コミット有無+事業戦略上の必要) -->
           <!-- TODO -->
@@ -142,15 +147,15 @@ export default {
         num: 1,
         options: {
           1: "全施設の3割未満",
-          3: "全施設の3〜6割",
-          5: "全施設の6割以上",
+          3: "3〜6割",
+          5: "6割以上",
         },
       },
       r_frequency: {
         title: "頻度",
         num: 1,
         options: {
-          1: "1回きり",
+          1: "1度きり",
           2: "年に1回以上",
           3: "月に1~3回",
           4: "週1回以上",
@@ -173,8 +178,8 @@ export default {
         title: "ユーザー影響度",
         num: 1,
         options: {
-          1: "そのユーザー1人で完結する",
-          3: "施設内の他の職員に波及する",
+          1: "職員1人で完結",
+          3: "他の職員に波及",
           5: "保護者まで届く",
         },
       },
@@ -182,9 +187,9 @@ export default {
         title: "その後の行動",
         num: 1,
         options: {
-          1: "無視 or 問い合わせ",
-          3: "運用回避 or 丹念に説明",
-          5: "運用回避できず謝罪 or 解約",
+          1: "無視/問い合わせ",
+          3: "運用回避/丹念に説明",
+          5: "運用回避不可/解約",
         },
       },
       i_commit: {
@@ -215,7 +220,8 @@ export default {
           this.getCorporateInsiderNum()) *
         // Impact
         (this.i_affected_users.num * this.i_after_actions.num +
-          this.i_commit.num + this.i_strategy.num)
+          this.i_commit.num +
+          this.i_strategy.num)
       );
     },
     getCorporateInsiderNum: function () {
@@ -236,7 +242,7 @@ export default {
       text += "| " + this.i_affected_users.title + " | " + this.i_affected_users.num + " |\n";
       text += "| " + this.i_after_actions.title + " | " + this.i_after_actions.num + " |\n";
       text += "| " + this.i_commit.title + " | " + this.i_commit.num + " |\n";
-      text += "| **total** | **" + this.getScore()+ "** |\n";
+      text += "| **total** | **" + this.getScore() + "** |\n";
 
       return text;
     },
@@ -252,20 +258,49 @@ export default {
 </script>
 
 <style>
+/* 全体 */
 html {
   width: 400px;
   height: 400px;
+  margin-left: 10px;
+  margin-right: 50px;
 }
 .contents {
   position: relative;
   overflow: hidden;
-  width: 280px;
   border: 2px solid #000;
+}
+#contents p {
+  font-size: 15px;
+}
+
+/* position */
+#bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  padding: 5px;
+  background: skyblue;
+  z-index: 500;
+}
+#bar h1 {
+  margin-left: 30px;
+}
+#bar p {
+  margin-left: 30px;
+}
+.page {
+  margin-top: 160px;
+  margin-right: 50px;
 }
 
 /* tab */
 #tabs {
   overflow: hidden;
+  margin: auto;
+  text-align: center;
 }
 #tabs input {
   display: none;
@@ -273,7 +308,7 @@ html {
 #tabs label {
   display: inline-block;
   line-height: 40px;
-  width: 120px;
+  width: 180px;
   text-align: center;
   cursor: pointer;
   background: #eee;
@@ -284,13 +319,5 @@ html {
 #tabs label:hover {
   background: #01a2c1;
   color: #fff;
-}
-#contents p {
-  font-size: 15px;
-  margin: 0;
-}
-#contents p.title {
-  font-size: 16px;
-  font-weight: bold;
 }
 </style>
