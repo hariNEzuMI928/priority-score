@@ -10,7 +10,7 @@
 $ git clone https://github.com/hariNEzuMI928/priority-score
 ```
 
-もしくは以下のボタンからリポジトリをZip形式でリポジトリをダウンロード（git不要）
+もしくは以下のボタンからzip形式でリポジトリをダウンロード（git不要）
 
 <br>
 <img src="https://user-images.githubusercontent.com/60064343/125165408-b7067400-e1d1-11eb-88cd-e46e411196e1.png" width="400px">
