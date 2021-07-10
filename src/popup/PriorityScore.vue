@@ -11,83 +11,79 @@
       </p>
 
       <div id="tabs" class="full-width">
-        <input type="radio" value="1" id="tab1" v-model="isActive" />
+        <input type="radio" value="1" id="tab1" v-model="isActiveTab" />
         <label for="tab1">バグ改修</label>
-        <input type="radio" value="2" id="tab2" v-model="isActive" />
+        <input type="radio" value="2" id="tab2" v-model="isActiveTab" />
         <label for="tab2">機能改善</label>
       </div>
     </div>
 
     <div class="page"></div>
     <ul id="contents">
-      <li v-if="isActive == '1'">
-        <!-- バグ改修 -->
-        <div class="margin">
-          <!-- メリット量=(施設アカウント数×頻度+社内関係者)×(関係者×その後の行動+社外コミット有無+事業戦略上の必要) -->
-
+      <div class="margin">
+        <li v-if="isActiveTab == '1'">
+          <!-- バグ改修 -->
           <div class="block">
             <h4>{{ r_facilities_count.title }}</h4>
-            <div>
-              <vue-slider
-                v-model="r_facilities_count.num"
-                :adsorb="true"
-                :min="1"
-                :max="5"
-                :interval="2"
-                :marks="r_facilities_count.options"
-              ></vue-slider>
-            </div>
-          </div>
-
-          <div class="block">
-            <h4>{{ r_frequency.title }}</h4>
-            <div>
-              <vue-slider
-                v-model="r_frequency.num"
-                :adsorb="true"
-                :min="1"
-                :max="5"
-                :interval="1"
-                :marks="r_frequency.options"
-              ></vue-slider>
-            </div>
-          </div>
-
-          <div class="block">
-            <h4>{{ r_corporate_insider.title }} : {{ r_corporate_insider.csp_title }}</h4>
-            <div>
-              <vue-slider
-                v-model="r_corporate_insider.csp_num"
-                :adsorb="true"
-                :data="involved_ppl_object"
-                :data-value="'id'"
-                :data-label="'name'"
-              ></vue-slider>
-            </div>
-          </div>
-
-          <div class="block">
-            <h4>{{ r_corporate_insider.title }} : {{ r_corporate_insider.dev_title }}</h4>
-            <div>
-              <vue-slider
-                v-model="r_corporate_insider.dev_num"
-                :adsorb="true"
-                :data="involved_ppl_object"
-                :data-value="'id'"
-                :data-label="'name'"
-              ></vue-slider>
-            </div>
-          </div>
-
-          <div class="block">
-            <h4>{{ i_affected_users.title }}</h4>
             <vue-slider
-              v-model="i_affected_users.num"
+              v-model="r_facilities_count.num"
               :adsorb="true"
               :min="1"
               :max="5"
               :interval="2"
-              :marks="i_affected_users.options"
+              :marks="r_facilities_count.options"
+            ></vue-slider>
+          </div>
+
+          <div class="block">
+            <h4>{{ r_frequency.title }}</h4>
+            <vue-slider
+              v-model="r_frequency.num"
+              :adsorb="true"
+              :min="1"
+              :max="5"
+              :interval="1"
+              :marks="r_frequency.options"
+            ></vue-slider>
+          </div>
+
+          <div class="block">
+            <h4>
+              {{ r_corporate_insider.title }} :
+              {{ r_corporate_insider.csp_title }}
+            </h4>
+            <vue-slider
+              v-model="r_corporate_insider.csp_num"
+              :adsorb="true"
+              :data="involved_ppl_object"
+              :data-value="'id'"
+              :data-label="'name'"
+            ></vue-slider>
+          </div>
+
+          <div class="block">
+            <h4>
+              {{ r_corporate_insider.title }} :
+              {{ r_corporate_insider.dev_title }}
+            </h4>
+            <vue-slider
+              v-model="r_corporate_insider.dev_num"
+              :adsorb="true"
+              :data="involved_ppl_object"
+              :data-value="'id'"
+              :data-label="'name'"
+            ></vue-slider>
+          </div>
+
+          <div class="block">
+            <h4>{{ i_user_spread_degrees.title }}</h4>
+            <vue-slider
+              v-model="i_user_spread_degrees.num"
+              :adsorb="true"
+              :min="1"
+              :max="5"
+              :interval="2"
+              :marks="i_user_spread_degrees.options"
             ></vue-slider>
           </div>
 
@@ -126,14 +122,112 @@
               :marks="i_strategy.options"
             ></vue-slider>
           </div>
-        </div>
-      </li>
-      <li v-else-if="isActive == '2'">
-        <p>
-          <!-- メリット量=(施設アカウント数×頻度+社内関係者)×(関係者×感情の変化+コミット有無+事業戦略上の必要) -->
-          <!-- TODO -->
-        </p>
-      </li>
+        </li>
+        <li v-else-if="isActiveTab == '2'">
+          <!-- 機能改善 -->
+          <div class="block">
+            <h4>{{ r_facilities_count.title }}</h4>
+            <vue-slider
+              v-model="r_facilities_count.num"
+              :adsorb="true"
+              :min="1"
+              :max="5"
+              :interval="2"
+              :marks="r_facilities_count.options"
+            ></vue-slider>
+          </div>
+
+          <div class="block">
+            <h4>{{ r_frequency.title }}</h4>
+            <vue-slider
+              v-model="r_frequency.num"
+              :adsorb="true"
+              :min="1"
+              :max="5"
+              :interval="1"
+              :marks="r_frequency.options"
+            ></vue-slider>
+          </div>
+
+          <div class="block">
+            <h4>
+              {{ r_corporate_insider.title }} :
+              {{ r_corporate_insider.csc_title }}
+            </h4>
+            <div>
+              <vue-slider
+                v-model="r_corporate_insider.csc_num"
+                :adsorb="true"
+                :data="involved_ppl_object"
+                :data-value="'id'"
+                :data-label="'name'"
+              ></vue-slider>
+            </div>
+          </div>
+
+          <div class="block">
+            <h4>
+              {{ r_corporate_insider.title }} :
+              {{ r_corporate_insider.dev_title }}
+            </h4>
+            <vue-slider
+              v-model="r_corporate_insider.dev_num"
+              :adsorb="true"
+              :data="involved_ppl_object"
+              :data-value="'id'"
+              :data-label="'name'"
+            ></vue-slider>
+          </div>
+
+          <div class="block">
+            <h4>{{ i_affected_users_type.title }}</h4>
+            <vue-slider
+              v-model="i_affected_users_type.num"
+              :adsorb="true"
+              :min="1"
+              :max="5"
+              :interval="2"
+              :marks="i_affected_users_type.options"
+            ></vue-slider>
+          </div>
+
+          <div class="block">
+            <h4>{{ i_emotion_change.title }}</h4>
+            <vue-slider
+              v-model="i_emotion_change.num"
+              :adsorb="true"
+              :min="1"
+              :max="5"
+              :interval="2"
+              :marks="i_emotion_change.options"
+            ></vue-slider>
+          </div>
+
+          <div class="block">
+            <h4>{{ i_commit.title }}</h4>
+            <vue-slider
+              v-model="i_commit.num"
+              :adsorb="true"
+              :min="0"
+              :max="25"
+              :interval="25"
+              :marks="i_commit.options"
+            ></vue-slider>
+          </div>
+
+          <div class="block">
+            <h4>{{ i_strategy.title }}</h4>
+            <vue-slider
+              v-model="i_strategy.num"
+              :adsorb="true"
+              :min="0"
+              :max="10"
+              :interval="5"
+              :marks="i_strategy.options"
+            ></vue-slider>
+          </div>
+        </li>
+      </div>
     </ul>
   </div>
 </template>
@@ -155,6 +249,7 @@ export default {
   },
   data: function () {
     return {
+      isActiveTab: "1",
       r_facilities_count: {
         title: "既存施設アカウント数",
         num: 1,
@@ -181,14 +276,16 @@ export default {
         csp_title: "サポート",
         dev_num: 0,
         dev_title: "開発",
+        csc_num: 0,
+        csc_title: "サクセス",
       },
       involved_ppl_object: [
         { id: 0, name: "影響小" },
         { id: 1, name: "そこそこ" },
         { id: 2, name: "影響大" },
       ],
-      i_affected_users: {
-        title: "ユーザー影響度",
+      i_user_spread_degrees: {
+        title: "ユーザー波及度",
         num: 1,
         options: {
           1: "職員1人で完結",
@@ -222,25 +319,62 @@ export default {
           10: "大",
         },
       },
-      isActive: "1",
+      i_affected_users_type: {
+        title: "影響あるユーザーの種類（管理職/事務、一般職員、保護者/子ども）",
+        num: 1,
+        options: {
+          1: "1組",
+          3: "2組",
+          5: "3組",
+        },
+      },
+      i_emotion_change: {
+        title: "感情の変化",
+        num: 1,
+        options: {
+          1: "まぁ嬉しい",
+          3: "そこそこ嬉しい",
+          5: "とても嬉しい",
+        },
+      },
     };
   },
   methods: {
     getScore: function () {
-      return (
-        // Reach
-        (this.r_facilities_count.num * this.r_frequency.num +
-          this.getCorporateInsiderNum()) *
-        // Impact
-        (this.i_affected_users.num * this.i_after_actions.num +
-          this.i_commit.num +
-          this.i_strategy.num)
-      );
+      let num = 0;
+
+      if (this.isActiveTab === "1") {
+        // (施設アカウント数×頻度+社内関係者)×(関係者×その後の行動+社外コミット有無+事業戦略上の必要)
+        num =
+          // Reach
+          (this.r_facilities_count.num * this.r_frequency.num +
+            this.getCorporateInsiderNum(
+              this.r_corporate_insider.csp_num,
+              this.r_corporate_insider.dev_num
+            )) *
+          // Impact
+          (this.i_user_spread_degrees.num * this.i_after_actions.num +
+            this.i_commit.num +
+            this.i_strategy.num);
+      } else if (this.isActiveTab === "2") {
+        // (施設アカウント数×頻度+社内関係者)×(関係者×感情の変化+コミット有無+事業戦略上の必要)
+        num =
+          // Reach
+          (this.r_facilities_count.num * this.r_frequency.num +
+            this.getCorporateInsiderNum(
+              this.r_corporate_insider.csc_num,
+              this.r_corporate_insider.dev_num
+            )) *
+          // Impact
+          (this.i_affected_users_type.num * this.i_emotion_change.num +
+            this.i_commit.num +
+            this.i_strategy.num);
+      }
+
+      return num;
     },
-    getCorporateInsiderNum: function () {
-      return involved_ppl_options[this.r_corporate_insider.csp_num][
-        this.r_corporate_insider.dev_num
-      ];
+    getCorporateInsiderNum: function (num1, num2) {
+      return involved_ppl_options[num1][num2];
     },
     formatedAsMarkdown() {
       let text = "";
