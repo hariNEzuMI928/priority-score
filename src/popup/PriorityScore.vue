@@ -131,7 +131,7 @@ const involved_ppl_options = [
 ];
 
 export default {
-  name: "App",
+  name: "PriorityScore",
   components: {
     VueSlider,
   },
