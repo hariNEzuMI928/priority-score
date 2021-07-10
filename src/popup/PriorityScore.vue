@@ -377,22 +377,97 @@ export default {
       return involved_ppl_options[num1][num2];
     },
     formatedAsMarkdown() {
+      const resultArr = this.getResultTitleAndNum();
       let text = "";
 
       text += "## メリット量\n";
       text += "\n";
       text += "| name | value |\n";
       text += "| ---- | ---- |\n";
-      text += "| " + this.r_facilities_count.title + " | " + this.r_facilities_count.num + " |\n";
-      text += "| " + this.r_frequency.title + " | " + this.r_facilities_count.num + " |\n";
-      text += "| " + this.r_corporate_insider.title + " | " + this.getCorporateInsiderNum()+ " |\n";
-      text += "| " + this.i_affected_users.title + " | " + this.i_affected_users.num + " |\n";
-      text += "| " + this.i_after_actions.title + " | " + this.i_after_actions.num + " |\n";
-      text += "| " + this.i_commit.title + " | " + this.i_commit.num + " |\n";
+      resultArr.forEach((r) => {
+        text += "| " + r.title + " | " + r.num + " |\n";
+      });
       text += "| **total** | **" + this.getScore() + "** |\n";
 
       return text;
     },
+
+    getResultTitleAndNum() {
+      let resultArr = [];
+
+      if (this.isActiveTab === "1") {
+        resultArr = [
+          {
+            title: this.r_facilities_count.title,
+            num: this.r_facilities_count.num,
+          },
+          {
+            title: this.r_frequency.title,
+            num: this.r_frequency.num,
+          },
+          {
+            title: this.r_corporate_insider.title,
+            num: this.getCorporateInsiderNum(
+              this.r_corporate_insider.csp_num,
+              this.r_corporate_insider.dev_num
+            ),
+          },
+          {
+            title: this.i_affected_users.title,
+            num: this.i_affected_users.num,
+          },
+          {
+            title: this.i_after_actions.title,
+            num: this.i_after_actions.num,
+          },
+          {
+            title: this.i_commit.title,
+            num: this.i_commit.num,
+          },
+          {
+            title: this.i_strategy.title,
+            num: this.i_strategy.num,
+          },
+        ];
+      } else if (this.isActiveTab === "2") {
+        resultArr = [
+          {
+            title: this.r_facilities_count.title,
+            num: this.r_facilities_count.num,
+          },
+          {
+            title: this.r_frequency.title,
+            num: this.r_frequency.num,
+          },
+          {
+            title: this.r_corporate_insider.title,
+            num: this.getCorporateInsiderNum(
+              this.r_corporate_insider.csc_num,
+              this.r_corporate_insider.dev_num
+            ),
+          },
+          {
+            title: this.i_affected_users_type.title,
+            num: this.i_affected_users_type.num,
+          },
+          {
+            title: this.i_emotion_change.title,
+            num: this.i_emotion_change.num,
+          },
+          {
+            title: this.i_commit.title,
+            num: this.i_commit.num,
+          },
+          {
+            title: this.i_strategy.title,
+            num: this.i_strategy.num,
+          },
+        ];
+      }
+
+      return resultArr;
+    },
+
     writeToClipboard(text) {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(text).catch((e) => {
