@@ -217,8 +217,7 @@ export default {
           this.getCorporateInsiderNum()) *
         // Impact
         (this.i_affected_users.num * this.i_after_actions.num +
-          this.i_commit.num +
-          this.i_strategy.num)
+          this.i_commit.num + this.i_strategy.num)
       );
     },
     getCorporateInsiderNum: function () {

@@ -7,7 +7,7 @@
 - [x] 機能改善タブ作る
 - [ ] 機能改善の計算式追加（priority-score/src/popup/App.vue）
 - [ ] デザインをいい感じにする（priority-score/src/popup/App.vue）
-- [ ] アイコンをいい感じのものに変更する（priority-score/dist/icons/）
+- [x] アイコンをいい感じのものに変更する（priority-score/dist/icons/）
 
 ## setup
 
@@ -22,6 +22,7 @@ npm run build
 
 1. `npm run build`を実行する
 2. chrome://extensions/ にアクセス
-3. 左上の「パッケージ化されていない拡張機能を読み込む」を押下
-4. 当リポジトリのdistディレクトリを指定
-5. 読み込んだ拡張機能を有効にする
+3. 右上の「デベロッパーモード」をON
+4. 左上の「パッケージ化されていない拡張機能を読み込む」を押下
+5. 当リポジトリのdistディレクトリを指定
+6. 読み込んだ拡張機能を有効にする
