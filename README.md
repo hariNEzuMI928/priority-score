@@ -5,8 +5,8 @@
 - [x] Markdownでコピペさせる
 - [ ] コンポーネント分けたい（priority-score/src/popup/App.vue）
 - [x] 機能改善タブ作る
-- [ ] 機能改善の計算式追加（priority-score/src/popup/App.vue）
-- [ ] デザインをいい感じにする（priority-score/src/popup/App.vue）
+- [x] 機能改善の計算式追加（priority-score/src/popup/App.vue）
+- [x] デザインをいい感じにする（priority-score/src/popup/App.vue）
 - [x] アイコンをいい感じのものに変更する（priority-score/dist/icons/）
 
 ## Setup
