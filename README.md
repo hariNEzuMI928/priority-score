@@ -1,5 +1,7 @@
 # priority-score
 
+![生ハム](https://user-images.githubusercontent.com/60064343/125165244-2465d500-e1d1-11eb-902b-7035953162ec.png)
+
 ## Browser settings (Without develop)
 
 1. 任意のディレクトリで以下コマンドを実行
