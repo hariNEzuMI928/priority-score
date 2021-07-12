@@ -413,8 +413,8 @@ export default {
             ),
           },
           {
-            title: this.i_affected_users.title,
-            num: this.i_affected_users.num,
+            title: this.i_user_spread_degrees.title,
+            num: this.i_user_spread_degrees.num,
           },
           {
             title: this.i_after_actions.title,
